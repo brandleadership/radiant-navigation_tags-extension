@@ -12,6 +12,8 @@ class NavigationTagsExtension < Radiant::Extension
   
   def activate
     Page.send :include, NavigationTags
+    admin.tabs.add "Navigation Type", "/admin/navigation_types", :after => "Layouts", :visibility => [:all]
+    admin.page.edit.add :parts_bottom, "navigationType", :after  => 'edit_layout_and_type'
   end
   
   def deactivate
