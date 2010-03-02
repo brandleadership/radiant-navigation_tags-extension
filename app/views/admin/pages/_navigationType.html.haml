@@ -1,0 +1,3 @@
+- if  (@page.parent != nil && @page.parent.parent == nil && @page.parent.class_name != "LanguageRedirectPage") || (@page.parent != nil && @page.parent.parent != nil && @page.parent.parent.parent == nil && @page.parent.class_name != "LanguageRedirectPage")
+  <label for="page_base_gallery_id">Navigation Type</label>
+  = select :page, :navigationTypeId,  NavigationType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil])
