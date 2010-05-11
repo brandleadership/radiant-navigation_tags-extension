@@ -147,5 +147,50 @@ module NavigationTags
     end
     return checknavigationtype(page.parent, id)
   end
+  
+  desc %{
+    This tag extends the nav tag from navigation_tags extension.
+    It passes the current page as root to the nav tag.
+ 
+    *Usage:*
+    <r:subnavigation_current/>
+  }
+  tag "subnavigation_current" do |tag|
+    tag.attr['root'] = tag.locals.page.url
+    tag.render('nav', tag.attr)
+  end
+ 
+  desc %{
+    This tag extends the nav tag from navigation_tags extension.
+    Sets the root of the nav tag so much level higher then definied.
+ 
+    *Usage:*
+    <r:subnavigation_of_parent level_up=""/>
+  }
+  tag "subnavigation_of_parent" do |tag|
+    if tag.attr['level_up']
+      up = tag.attr['level_up'].to_i
+    else
+      up = tree_depth(tag.locals.page)
+    end
+    root_page = tag.locals.page
+    while up != 0
+      root_page = root_page.parent
+      up -= 1
+    end
+    tag.attr['root'] = root_page.url
+    tag.attr['level_up'] = nil
+    tag.render('nav', tag.attr)
+  end
+ 
+  private
+  def tree_depth(active_page)
+     reverse_depth = 0
+     while active_page.parent != nil
+       reverse_depth += 1
+       active_page = active_page.parent
+     end
+     return reverse_depth - 1
+  end
 
 end
