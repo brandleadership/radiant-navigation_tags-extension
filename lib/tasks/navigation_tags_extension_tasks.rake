@@ -11,6 +11,18 @@ namespace :radiant do
           NavigationTagsExtension.migrator.migrate
         end
       end
+      
+      desc "Copies public assets of the Navigation Tags extension to the public/ directory."
+      task :update => :environment do
+        is_svn_or_dir = proc {|path| path =~ /\.svn/ || File.directory?(path) }
+        Dir[NavigationTagsExtension.root + "/public/**/*"].reject(&is_svn_or_dir).each do |file|
+          path = file.sub(NavigationTagsExtension.root, '')
+          directory = File.dirname(path)
+          puts "Copying #{path}..."
+          mkdir_p RAILS_ROOT + directory
+          cp file, RAILS_ROOT + path
+        end
+      end
     
     end
   end
