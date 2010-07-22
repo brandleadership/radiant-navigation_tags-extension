@@ -19,7 +19,7 @@ class NavigationTagsExtension < Radiant::Extension
   def activate
     Page.send :include, NavigationTags
     admin.nav[:content] << admin.nav_item("Navigation Type", "/admin/navigation_types")
-    admin.page.edit.add :form_bottom, "navigationType", :after  => 'edit_layout_and_type'
+    admin.page.edit.add :form_bottom, "navigation_type", :before => 'edit_buttons'
   end
   
   def deactivate
