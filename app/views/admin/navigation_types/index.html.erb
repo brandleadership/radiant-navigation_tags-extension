@@ -7,11 +7,11 @@
        <% @navigation_types.each do |navType| %>
          <tr  class="node level-0">
            <td class="page"><%= link_to  navType.name, { :action => 'edit', :id => navType.id } %></td>
-           <td class="page"><%= link_to image('remove', :alt => 'Remove Navigation Type'), remove_admin_navigation_type_url(:id => navType.id) %></td>
+           <td class="page"><%= link_to 'Remove Navigation Type', remove_admin_navigation_type_url(:id => navType.id) %></td>
          </tr>
       <%end%>
     </table>
 </u1>
 <%- end %>
 
-<%= link_to 'Add new navigation type', { :action => 'new' } %>
+<%= link_to 'Add Navigation Type', { :action => 'new' } %>
