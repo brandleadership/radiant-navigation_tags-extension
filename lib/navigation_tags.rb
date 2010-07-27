@@ -10,7 +10,6 @@ module NavigationTags
     <pre><code><r:nav [id="subnav"] [root=\"/products\"] [include_root=\"true\"] [depth=\"2\"] [expand_all=\"true\"]/></code></pre>
     *Attributes:*
 
-    root: defaults to "/", where to start building the navigation from, you can i.e. use "/products" to build a subnav
     include_root: defaults to false, set to true to include the root page (i.e. Home)
     ids_for_lis: defaults to false, enable this to give each li an id (it's slug prefixed with nav_)
     ids_for_links: defaults to false, enable this to give each link an id (it's slug prefixed with nav_)
@@ -21,8 +20,7 @@ module NavigationTags
   }
 
   tag "nav" do |tag|
-    root_url = tag.attr.delete('root') || "/" + I18n.locale
-    root_url = root_url.to_s
+    root_url = '/' + I18n.locale.to_s || '/'
     root = Page.find_by_url(root_url)
 
     raise NavTagError, "No page found at \"#{root_url}\" to build navigation from." if root.class_name.eql?('FileNotFoundPage')
